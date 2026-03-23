@@ -38,7 +38,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Bottom section */}
+      {/*This is the Bottom section */}
       <div className="absolute bottom-0 w-full border-t border-gray-200 p-4">
         <div className="flex items-center gap-3 rounded-lg px-4 py-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
