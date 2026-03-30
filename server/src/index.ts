@@ -6,13 +6,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Import routes
-import authRoutes from "./routes/auth";
-import transactionRoutes from "./routes/transactions";
-import categoryRoutes from "./routes/categories";
-import budgetRoutes from "./routes/budget";
+import authRoutes from "./routes/auth.js";
+import transactionRoutes from "./routes/transactions.js";
+import budgetRoutes from "./routes/budget.js";
+import categoryRoutes from "./routes/category.js"; // ✅ FIXED (missing import)
 
-// TODO: Import database connection
-// import { connectDB } from "./config/db";
+// Import DB connection
+import connectDB from "./config/db.js"; // ✅ ADDED
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,10 +34,20 @@ app.get("/api/health", (_req, res) => {
 });
 
 // ─── Start Server ───────────────────────────────────────
-app.listen(PORT, () => {
-  // TODO: Connect to MongoDB before starting the server
-  // connectDB();
-  console.log(`🚀 SpendWise server running on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    // ✅ Connect DB BEFORE server starts
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`🚀 SpendWise server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Server failed to start:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 export default app;
